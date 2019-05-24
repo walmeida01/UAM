@@ -48,7 +48,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="listar-user.html">
+               <a class="nav-link" href="listar-user.html">
                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-layers"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
                  Listar Usuários
                 </a>
@@ -60,7 +60,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="gerar-prova.html">
+               <a class="nav-link" href="gerar-prova.html">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bar-chart-2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
                   Gerar Prova
                 </a>
@@ -90,35 +90,26 @@
 
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
           <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-            <h1 class="h2">Cadastro de Usuário</h1>
+            <h1 class="h2">Listar Usuários</h1>
             <div class="btn-toolbar mb-2 mb-md-0">              
             </div>
           </div>
           <form>
              <div class="form-row">
-               <div class="col-md-4 mb-6">
-                   <label for="inputNome">Nome</label>
-                  <input type="text" class="form-control" id="inputNome" placeholder="Digite seu nome">                        
-                                        </div>                                        
-                                         <div class="form-group col-md-3">
-                                               <label for="inputAddress">R.A</label>
-                                               <input type="text" class="form-control" id="inputRA" placeholder="Digite seu R.A">
-                                         </div> 
-                                        <div class="form-group col-md-6">
-                                          <label for="inputEmail">Email</label>
-                                          <input type="email" class="form-control" id="inputEmail" placeholder="Email">
-                                        </div>
-                                        <div class="form-group col-md-4">
-                                          <label for="inputPassword">Senha</label>
-                                          <input type="password" class="form-control" id="inputPassword" placeholder="Senha">
-                                        </div>
-                                        <div class="form-group col-md-4">
-                                                <label for="inputPassword2">Confirmar Senha</label>
-                                                <input type="password" class="form-control" id="inputPassword2" placeholder="Confirmar Senha">
-                                      </div>
-                                  </div>  
-                             <button type="button" class="btn-cadastro" onclick="validatePassword()">Cadastrar</button>                             
-                        </div>
+               <div class="col-md">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">E-mail</th>
+                        <th scope="col">Code</th>
+                        <th scope="col">Tipo</th>
+                        <th scope="col"></th>
+                      </tr>
+                    </thead>
+                    <tbody id="userList">
+                    </tbody>
+                  </table>                         
           </div>
         </main>
       </div>
@@ -142,46 +133,47 @@
     <script src="./bootstrap/js/Chart.min.js.download"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script type="text/javascript">
-     let validatePassword = () => {
-       NovaSenha = document.getElementById('inputPassword').value;
-       CNovaSenha = document.getElementById('inputPassword2').value;
-       if (NovaSenha != CNovaSenha) {
-         return alert("SENHAS DIFERENTES!\nFAVOR DIGITAR SENHAS IGUAIS"); 
-       }
-         return register(); 
-    }
-
-    let register = () => {
+    let listar = () => {
         var settings = {
           "async": true,
           "crossDomain": false,
-          "url": "https://localhost:44353/api/v1/Users/Register",
-          "method": "POST",
+          "url": "https://localhost:44353/api/v1/Users",
+          "method": "GET",
           "headers": {
             "Content-Type": "application/json",
-          },
-          "processData": false,
-          "data": `{
-            'userName': '${$('#inputNome').val()}',
-            'password': ${$('#inputPassword').val()},
-            'email': '${$('#inputEmail').val()}',
-            'code': ${$('#inputRA').val()},
-            'type': 1
-          }`
+          }
         }
 
         $.ajax(settings).done(function (response, error) {
+
+          let column = response.map((user) => {
+            return(`<tr>
+              <th scope="row">${user.userName}</th>
+              <td>${user.email}</td>
+              <td>${user.code}</td>
+              <td>${user.type === 1 ? "Professor": "Diretor"}</td>
+              <td><button type="button" class="btn btn-danger" onclick="deleteUser(${user.code})">DELETE</button></td>
+            </tr>`);
+          })
+
+          $("#userList").empty();
+          $("#userList").append(column);
+
           console.log(response, error);
-         alert("SUSEXO TOTAL!! È NOIS Q VOA BRUXÃO");
-         $('#inputNome').val('')
-         $('#inputPassword').val('')
-         $('#inputEmail').val('')
-         $('#inputRA').val('')
-         $('#inputPassword2').val('')
+          
+
         })
         .catch((res) => {
           alert(res.responseText);
         });
+    }
+
+    listar();
+
+    let deleteUser = (codigo) => {
+      alert(`User ${codigo} foi deletado com susexo`);
+
+      listar();
     }
 
       var ctx = document.getElementById("myChart");

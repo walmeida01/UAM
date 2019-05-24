@@ -25,14 +25,8 @@
                     <div class="form-group">
                         <input type="password" class="form-control" id="inputPassword" placeholder="enter password">
                         </div>                      
-                        <button type="button" class="abc" onclick="login()"> Login</button>  
-                         <!--<button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">
-                          Única alternância -->
-                                                    
-                </form>    
-                <div class="col-12 forgot">
-                    <a href="#">Forgot Password?</a>
-                    </div>                    
+                        <button type="button" class="botaoindex" onclick="login()" focus=""> Login</button>                              
+                </form>                    
                 </div>
             </div> <!--- end of modal content-->
         </div>
@@ -53,7 +47,7 @@
           "data": `{
             'email': '${$('#userName').val()}',
             'password': '${$('#inputPassword').val()}',
-             'type': 1
+             'type': 2
             
           }`
         }
