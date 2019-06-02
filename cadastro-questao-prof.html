@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<!-- saved from url=(0057)https://getbootstrap.com.br/docs/4.1/examples/dashboard/# -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="./img/uam.png">
+    <link rel="stylesheet" type="text/css" href="./css/style-questao.css">
+
+    <title>Cadastro de Questões</title>
+
+    <!-- Principal CSS do Bootstrap -->
+    <link href="./bootstrap/js/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Estilos customizados para esse template -->
+    <link href="./bootstrap/js/dashboard.css" rel="stylesheet">
+  <style type="text/css">/* Chart.js */
+@-webkit-keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}@keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}.chartjs-render-monitor{-webkit-animation:chartjs-render-animation 0.001s;animation:chartjs-render-animation 0.001s;}</style></head>
+
+  <body>
+    <nav class="navbar navbar-dark fixed-top bg-primary flex-md-nowrap p-0 shadow">
+      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="home-prof.html">Pro Exame Builder </a>
+      <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+      <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+          <a class="nav-link" href="index.html">Sair</a>
+        </li>
+      </ul>
+    </nav>
+    <div class="container-fluid">
+      <div class="row">
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+          <div class="sidebar-sticky">
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                <a class="nav-link active" href="home-prof.html">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                  Inicio <span class="sr-only">(atual)</span>
+                </a>
+              </li>        
+              <li class="nav-item">
+                <a class="nav-link" href="cadastro-questao-prof.html">
+                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
+                  Cadastro Questões
+                </a>
+              </li>
+          </div>
+        </nav>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2">Cadastro de Questões</h1>
+            <div class="btn-toolbar mb-2 mb-md-0">             
+            </div>
+          </div>
+         <form>
+          <div class="form-group col-md-6">
+              <label for="idQuestao">Questão</label>
+              <textarea class="form-control" id="idQuestao" rows="3"></textarea>
+            </div>  
+              <fieldset class="form-group">
+            <div class="row">
+              <legend class="col-form-label col-sm-12" id="idAlternativa">Alternativas</legend>
+              <div class="col-sm-9">
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" checked="true" name="idAlternativa" id="idFacil" value="#idAlternativaA" >
+                  <input type="text" name="" id="idAlternativaA" placeholder="Digite a Alternativa A"> </input>                   
+                </div>
+               <div class="form-check">
+                  <input class="form-check-input" type="radio" name="idAlternativa" id="idMedia" value="#idAlternativaB">
+                      <input type="text" name="" id="idAlternativaB" placeholder="Digite a Alternativa B"> </input>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="idAlternativa" id="idDificil" value="#idAlternativaC" >
+                   <input type="text" name="" id="idAlternativaC" placeholder="Digite a Alternativa C"> </input>
+                  </div>
+                </div>
+              </div>
+            </fieldset>      
+            <div class="form-row col-md-3">            
+              <label for="idCurso">Curso</label>
+              <select class="form-control" id="cursosCombo" onchange="listarMateria(this.options[this.selectedIndex].value)">
+
+              </select>
+            </div>        
+             <div class="form-row col-md-3">            
+              <label for="idCurso">Matéria</label>
+              <select class="form-control" id="materiasCombo">
+
+              </select>
+            </div>                
+            <fieldset class="form-group">
+            <div class="row">
+              <legend class="col-form-label col-sm-12" id="idDificuldade">Dificuldade</legend>
+              <div class="col-sm-9">
+                <div class="form-check">
+                  <input class="form-check-input" checked="true" type="radio" name="idRadio" id="idFacil" value="0" >
+                  <label class="form-check-label" for="gridRadios1">
+              Fácil
+                  </label>
+                </div>
+               <div class="form-check">
+                  <input class="form-check-input" type="radio" name="idRadio" id="idMedia" value="1" >
+                  <label class="form-check-label" for="gridRadios2">
+                    Média
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="idRadio" id="idDificil" value="2" >
+                  <label class="form-check-label" for="gridRadios3">
+                  Difícil
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </fieldset>             
+            <div class="form-group">
+              <label for="exampleFormControlFile1">Anexe uma imagem na questão</label>
+              <input type="file" class="form-control-file" id="idFile">
+                </div>                
+                <button type="button" class="btn btn-primary" onclick="cadquestions()">Cadastrar</button>   
+               </div>                              <!-- onclick="cadquestions()-->
+               </form>   
+           </div>           
+        </main>
+      </div>
+    </div>
+
+    <!-- Principal JavaScript do Bootstrap
+    ================================================== -->
+    <!-- Foi colocado no final para a página carregar mais rápido -->
+    <script src="./bootstrap/js/jquery-3.3.1.slim.min.js.download" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+    <script src="./bootstrap/js/popper.min.js.download"></script>
+    <script src="./bootstrap/js/bootstrap.min.js.download"></script> 
+
+    <!-- Ícones -->
+    <script src="./bootstrap/js/feather.min.js.download"></script>
+    <script>
+      feather.replace()
+    </script>
+    <script src="./bootstrap/js/Chart.min.js.download"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script type="text/javascript">
+      let listarMateria = (subjectId) => {
+        var settings = {
+          "async": true,
+          "crossDomain": false,
+          "url": `https://localhost:44353/api/v1/Combos/Matters?subjectId=${subjectId}`,
+          "method": "GET",
+          "headers": {
+            "Content-Type": "application/json",
+          }
+        }
+
+        $.ajax(settings).done(function (response, error) {
+
+          let column = response.map((matter) => {
+            return(`<option value="${matter.id}">${matter.matter}</option>`);
+          })
+
+          $("#materiasCombo").empty();
+          $("#materiasCombo").append(column);
+
+
+          console.log(response, error);
+          
+
+        })
+        .catch((res) => {
+          alert(res.responseText);
+        });
+    }
+
+      let listarCurso = () => {
+        var settings = {
+          "async": true,
+          "crossDomain": false,
+          "url": "https://localhost:44353/api/v1/Combos/Subjects",
+          "method": "GET",
+          "headers": {
+            "Content-Type": "application/json",
+          }
+        }
+
+        $.ajax(settings).done(function (response, error) {
+
+          let column = response.map((subject) => {
+            return(`<option value="${subject.id}">${subject.subject}</option>`);
+          })
+
+          $("#cursosCombo").empty();
+          $("#cursosCombo").append(column);
+          $("#materiasCombo").empty();
+          
+          listarMateria(response[0].id || 0);
+          console.log(response, error);
+          
+
+        })
+        .catch((res) => {
+          alert(res.responseText);
+        });
+    }
+
+    listarCurso();
+
+      let cadquestions = () => {
+
+        alert(document.getElementById('idFile').value)
+        alert("passei here")
+        let arrayOptions = [];
+
+        arrayOptions.push($('#idAlternativaA').val());
+        arrayOptions.push($('#idAlternativaB').val());
+        arrayOptions.push($('#idAlternativaC').val());
+      
+        alert(arrayOptions)
+
+
+      var settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": "https://localhost:44353/api/v1/Exams/Questions",
+        "method": "POST",
+        "headers": {
+            "Content-Type": "application/json",
+          },
+        "processData": false,
+        "data": `{
+            'questionName': '${$('#idQuestao').val()}',
+            'difficult':   '${parseInt($('input[name="idRadio"]:checked').val())}',
+            'options': '${$(arrayOptions)}',
+              'rightQuestion': '${$($('input[name="idAlternativa"]:checked').val()).val()}',
+              'used': false,
+              'image': "C:/Users/ctiadmin/Downloads/aa.PNG",
+              'author': "buzz",
+              'hasOption': true,
+              'matterId': 1,
+              'subjectId': 2
+          }`
+
+      }
+
+      console.log(settings.data);
+
+      $.ajax(settings).done(function (response) {
+        console.log(response);
+      });
+    }
+   
+</script>
+</body></html>
