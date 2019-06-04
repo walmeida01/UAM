@@ -1,5 +1,25 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 
+*{
+  margin: 0;
+  padding: 0;
+}
+
+.img-cad-user{
+  height: 0,05%;
+	width: 0.5%; 
+}
+
+.NameH2{
+  color: #26b197;
+  font-size: 200;
+  font-family: 'Roboto', Helvetica;
+  text-shadow: 5px 0 white, 0 1px white,
+      1px 0 white, 0 -1px white;
+
+}
+
+
 .btn-cadastro{
   display: inline-block;
   font-weight: 400;
