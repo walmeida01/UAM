@@ -72,25 +72,92 @@
             <div class="btn-toolbar mb-2 mb-md-0">             
             </div>
           </div>
+          <div class="form-group col-md-3">
+            <label for="idSemestre">Quantidade de Questões: </label>
+            <input type="number" id="qtdQuestao" max="100" min="0" value="0" onchange="qtdChange(this.value)">
+
+            <div class="form-check">
+                <input class="form-check-input" checked="true" type="radio" name="testType" id="idDificil" value="0" >
+                <label class="form-check-label" for="gridRadios3">
+                  N2
+                </label>
+              </div>
+            <div class="form-check">
+              <input class="form-check-input" checked="true" type="radio" name="testType" id="idDificil" value="1" >
+              <label class="form-check-label" for="gridRadios3">
+                Teste Progresso
+              </label>
+            </div>
+                    
+          </div>  
          <form>
-         <div class="form-row col-md-4">            
+            <div id="questoes">
+                       
+            </div> 
+            
+            
+            <input type="button" class="btn btn-primary" onclick="preview()" data-toggle="modal" data-target="#modalExemplo">
+                Gerar
+              </input>
+              
+              <!-- Modal -->
+              <div class="modal fade" id="modalExemplo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Preview</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <div id="modalPreview">
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                      <button type="button" onclick="generateAndDownload()" class="btn btn-primary">Confirmar e Baixar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>               
+            </form>   
+          </div>           
+        </main>
+      </div>
+    </div>
+    
+
+    <!-- Principal JavaScript do Bootstrap
+    ================================================== -->
+    <!-- Foi colocado no final para a página carregar mais rápido -->
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <!-- Ícones -->
+
+    <!-- Gráficos -->
+    <script>
+      var qtdChange = (qtd) => {
+        let i = 1;
+        var questions = []; 
+
+        while(i <= qtd){
+          questions.push(
+            `
+            <h4>Questão ${i}</h4>
+            <div class="form-row col-md-4">
               <label for="idCurso">Curso</label>
-              <select class="form-control" id="idCurso">
-                  <option>Sistema de informação</option>
-                  <option>Ciência da computação</option>
-                  <option>Mídias Digitais</option>
-                  <option>Marketing</option>
-                  <option>Administração</option>
+              <select class="form-control" id="idCurso-${i}" onchange="listarMateria(this.options[this.selectedIndex].value, 'idMateria-${i}')">
               </select>
             </div>           
             <div class="form-row col-md-4">            
               <label for="idCurso">Matéria</label>
-              <select class="form-control" id="idCurso">
-                  <option>Redes de Computadores</option>
-                  <option>Arquitetura de Software</option>
-                  <option>Design</option>
-                  <option>Técnicas de mkt</option>
-                  <option>Matemática Financeira</option>
+              <select class="form-control" id="idMateria-${i}">
               </select>
             </div>           
             <fieldset class="form-group">
@@ -98,85 +165,201 @@
               <legend class="col-form-label col-sm-12">Dificuldade</legend>
               <div class="col-sm-9">
                 <div class="form-check">
-                  <input class="form-check-input" type="radio" name="idFacil" id="idFacil" value="f" >
+                  <input class="form-check-input" checked="true" type="radio" name="idRadio-${i}" id="idFacil" value="0" >
                   <label class="form-check-label" for="gridRadios1">
               Fácil
                   </label>
                 </div>
                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="idFacil" id="idMedia" value="m" >
+                  <input class="form-check-input" type="radio" name="idRadio-${i}" id="idMedia" value="1" >
                   <label class="form-check-label" for="gridRadios2">
                     Média
                   </label>
                 </div>
                 <div class="form-check">
-                  <input class="form-check-input" type="radio" name="idFacil" id="idDificil" value="d" >
+                  <input class="form-check-input" type="radio" name="idRadio-${i}" id="idDificil" value="2" >
                   <label class="form-check-label" for="gridRadios3">
-                  Difícil
-                    </label>
-                  </div>
+                    Difícil
+                  </label>
+                </div>
+                </br>
+
+                <legend class="col-form-label col-sm-12">Tipo Questão</legend>
+                <div class="form-check">
+                  <input class="form-check-input" checked="true" type="radio" name="questionType-${i}" id="questionType-Alternativa" value="true" >
+                  <label class="form-check-label" for="gridRadios7">
+                    Alternativa
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="questionType-${i}" id="questionType-Escrita" value="false" >
+                  <label class="form-check-label" for="gridRadios7">
+                    Escrita
+                  </label>
+                </div>                  
+                </div>
                 </div>
               </div>
-            </fieldset>           
-                   <button type="button" class="btn btn-primary" onclick="cadquestions()">Cadastrar</button>                    
-               </div>                     
-               </form>   
-           </div>           
-        </main>
-      </div>
-    </div>
+            </fieldset> 
+            `
+          );
+          i++;
+        }
 
-    <!-- Principal JavaScript do Bootstrap
-    ================================================== -->
-    <!-- Foi colocado no final para a página carregar mais rápido -->
-    <script src="./bootstrap/js/jquery-3.3.1.slim.min.js.download" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
-    <script src="./bootstrap/js/popper.min.js.download"></script>
-    <script src="./bootstrap/js/bootstrap.min.js.download"></script>
+        $("#questoes").empty();
+        $("#questoes").append(questions);
 
-    <!-- Ícones -->
-    <script src="./bootstrap/js/feather.min.js.download"></script>
-    <script>
-      feather.replace()
-    </script>
+        listarCurso();
+      }
 
-    <!-- Gráficos -->
-    <script src="./bootstrap/js/Chart.min.js.download"></script>
-    <script>    
-      let cadquestions = () => {
+      let listarMateria = (subjectId, id = 0) => {
+        var settings = {
+          "async": true,
+          "crossDomain": false,
+          "url": `https://localhost:44353/api/v1/Combos/Matters?subjectId=${subjectId}`,
+          "method": "GET",
+          "headers": {
+            "Content-Type": "application/json",
+          }
+        }
+
+        $.ajax(settings).done(function (response, error) {
+
+          let materia = response.map((matter) => {
+            return(`<option value="${matter.id}">${matter.matter}</option>`);
+          })
+
+          if(id === 0) {
+          var i = 1;
+            while (i <= $('#qtdQuestao').val()) {
+              $(`#idMateria-${i}`).empty();
+              $(`#idMateria-${i}`).append(materia);
+              i++;
+            }
+            console.log(response, error);
+            
+          } else {
+            $(`#${id}`).empty();
+            $(`#${id}`).append(materia);
+          }
+        })
+        .catch((res) => {
+          alert(res.responseText);
+        });
+    }
+
+      let listarCurso = () => {
+        var settings = {
+          "async": true,
+          "crossDomain": false,
+          "url": "https://localhost:44353/api/v1/Combos/Subjects",
+          "method": "GET",
+          "headers": {
+            "Content-Type": "application/json",
+          }
+        }
+
+        $.ajax(settings).done(function (response, error) {
+
+          let options = response.map((subject) => {
+            return(`<option value="${subject.id}">${subject.subject}</option>`);
+          })
+
+            var i = 1;
+            while (i <= $('#qtdQuestao').val()) {
+              $(`#idCurso-${i}`).empty();
+              $(`#idCurso-${i}`).append(options);
+              $(`#idMateria-${i}`).empty();
+
+              listarMateria(response[0].id || 0);
+              i++;
+            }
+          console.log(response, error);
+        })
+        .catch((res) => {
+          alert(res.responseText);
+        });
+    }
+
+
+      let previewResponse;
+      let preview = () => {
+
+        const array = [];
+
+        var i = 1;
+          while (i <= $('#qtdQuestao').val()) {
+            array.push(`{
+              "difficult": ${parseInt($('input[name=idRadio-' + i +']:checked').val())},
+              "matterId": ${$('#idMateria-' + i).val()},
+              "subjectId": ${$('#idCurso-' + i).val()},
+              "hasOptions": ${!!$('input[name=questionType-' + i + ']:checked').val()}
+            }`);
+            i++;
+          }
+
       var settings = {
         "async": true,
-        "crossDomain": true,
-        "url": "https://localhost:44353/api/v1/Exams/Questions",
+        "crossDomain": false,
+        "url": "https://localhost:44353/api/v1/Exams/ExamGerenatePreview",
         "method": "POST",
         "headers": {
           "Content-Type": "application/json",
-          "User-Agent": "PostmanRuntime/7.11.0",
-          "Accept": "*/*",
-          "Host": "localhost:44353",
-          "accept-encoding": "gzip, deflate",
-          "content-length": "252",
-          "Connection": "keep-alive"
         },
         "processData": false,
-        "data": `{
-            'questionName': '${$('#idQuestao').val()}',
-            'difficult': '${$('#inputPassword').val()}', '$('input[name=radioName]:checked', '#myForm').val()
-             'options': ["2","3","4"]
-              'rightQuestion' :
-              'used': false
-              'image': ""
-              'author': "buzz"
-              'hasOption': true
-              'matterId': 1
-              'subjectId': 2
+        "data": `
+            {
+            "questionParams": [${array}],
+            "examType": ${parseInt($(`input[name="testType"]:checked`).val())}
           }`
 
       }
 
-      $.ajax(settings).done(function (response) {
+      console.log(settings.data);
+
+      $.ajax(settings).done((response) => {
+        previewResponse = response;
         console.log(response);
+
+        $('#modalPreview').empty();
+        var result = response.questions.map((question, index) => {
+          return(
+            `
+            </hr>
+            <h4>Questão ${index + 1}</h4>
+            <p>${question.questionName}</p>
+            ${question.image != "" ? (`<img src="${question.image}" height="200">`) : ''}
+            ${question.options !== null ? (`<ol type="a"><li>${question.options.join('</li><li>')}</li></ol>`) : ''}
+            ${question.rightQuestion !== '' ? (`<p>Resposta: ${question.rightQuestion}</p>`) : ''}
+          </br>`
+          )
+        }) 
+
+        $('#modalPreview').append(result);
       });
+      }
+
+      const generateAndDownload = () => {
+        var settings = {
+        "async": true,
+        "crossDomain": false,
+        "url": "https://localhost:44353/api/v1/Exams/ExamGenerate",
+        "method": "POST",
+        "headers": {
+          "Content-Type": "application/json",
+        },
+        "processData": false,
+        "data": `${JSON.stringify(previewResponse)}`
+      }
+
+      console.log(settings.data);
+
+      $.ajax(settings).done((response) => {
+        console.log(response);
+        window.open('c:/' + response.docX);
+      })
+    }
+
     </script>
   
 
