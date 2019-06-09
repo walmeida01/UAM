@@ -47,15 +47,15 @@
           "data": `{
             'email': '${$('#userName').val()}',
             'password': '${$('#inputPassword').val()}',
-             'type': 2
-            
           }`
         }
 
         $.ajax(settings).done(function (response, error) {
-          console.log(response, error);        
-         $(location).attr('href', 'home.html')          
-
+            if (response.type === 2) {
+                $(location).attr('href', 'home.html');
+            }  else {
+                $(location).attr('href', 'cadastro-questao-prof.html');
+            }
         })
         .catch((res) => {
           alert(res.responseText);
