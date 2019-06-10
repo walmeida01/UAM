@@ -100,7 +100,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="cadastro-disciplina.html">
+              <a class="nav-link" href="cadastro-curso.html">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                   stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file">
                   <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
@@ -109,13 +109,13 @@
                 Cadastro do Curso
               </a>
             <li class="nav-item">
-              <a class="nav-link" href="cadastro-curso.html">
+              <a class="nav-link" href="cadastro-disciplina.html">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                   stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file">
                   <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
                   <polyline points="13 2 13 9 20 9"></polyline>
                 </svg>
-                Cadastro do Matéria
+                Cadastro da Disciplina
               </a>
             </li>
             <li class="nav-item">
@@ -152,7 +152,7 @@
           </div>
         </div>
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-          <h1 class="h2">Cadastro de Questões</h1>
+          <h1 class="NameH2">Cadastro de Questões</h1>
           <div class="btn-toolbar mb-2 mb-md-0">
           </div>
         </div>
@@ -180,16 +180,16 @@
             <legend class="col-form-label col-sm-12" id="idDificuldade">Tipo da Questão</legend>
             <div class="col-sm-9">
               <div class="form-check">
-                <input class="form-check-input" checked="true" type="radio" name="questionType" id="idQuestionTypeAssinalar"
-                  value="assinalar">
+                <input class="form-check-input" checked="true" type="radio" name="questionType" id="idQuestionTypeMultipla"
+                  value="multiplaescolha">
                 <label class="form-check-label" for="gridRadios1">
-                  Assinalar
+                  Múltipla Escolha
                 </label>
               </div>
               <div class="form-check">
-                <input class="form-check-input" type="radio" name="questionType" id="idQuestionTypeEscrita" value="escrita">
+                <input class="form-check-input" type="radio" name="questionType" id="idQuestionTypeDissertativa" value="dissertativa">
                 <label class="form-check-label" for="gridRadios2">
-                  Escrita
+                  Dissertativa
                 </label>
               </div>
             </div>
@@ -274,11 +274,11 @@
   <script type="text/javascript">
     $('input[type=radio][name=questionType]').change(() => {
       var value = $('input[name="questionType"]:checked').val();
-      if (value === 'assinalar') {
+      if (value === 'multiplaescolha') {
         $("#rowAlternativa").removeClass("hidden");
         $("#rowResposta").addClass("hidden");
       }
-      else if (value === 'escrita') {
+      else if (value === 'dissertativa') {
         $("#rowResposta").removeClass("hidden");
         $("#rowAlternativa").addClass("hidden");
       }
@@ -360,10 +360,10 @@
 
       var rightQuestion = () => {
         var value = $('input[name="questionType"]:checked').val();
-        if (value === 'assinalar') {
+        if (value === 'multiplaescolha') {
           return $($('input[name="idAlternativa"]:checked').val()).val()
         }
-        else if (value === 'escrita') {
+        else if (value === 'dissertativa') {
           return $('#idResposta').val();
         }
       }
