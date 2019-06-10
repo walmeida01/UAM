@@ -2,3 +2,14 @@ body {
 
 	background-color: green
 }
+
+
+.NameH2{
+	color: #26b197;
+	font-size: 200;
+	font-family: 'Roboto', Helvetica;
+	text-shadow: 5px 0 white, 0 1px white,
+		1px 0 white, 0 -1px white;
+  
+  }
+  

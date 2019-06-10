@@ -21,10 +21,7 @@
 
   <body>
     <nav class="navbar navbar-dark fixed-top bg-primary flex-md-nowrap p-0 shadow">
-    <!--   <div class="img-cad-user"> 
-       <>
-        </div> -->
-      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="home.html" img src="img/uam.png">Pro Exame Builder </a>   
+      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="home.html">Pro Exame Builder </a>
       <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">      
       <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
@@ -56,16 +53,15 @@
                  Listar Usuários
                 </a>
               </li>
-                <li class="nav-item">
-                <a class="nav-link" href="cadastro-disciplina.html">
+              <li class="nav-item">
+                <a class="nav-link" href="cadastro-curso.html">
                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
                   Cadastro do Curso
                 </a>
-              </li>
                <li class="nav-item">
-                <a class="nav-link" href="cadastro-curso.html">
+                <a class="nav-link" href="cadastro-disciplina.html">
                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
-                  Cadastro do Matéria
+                  Cadastro da Disciplina
                 </a>
               </li>
               <li class="nav-item">
@@ -85,35 +81,67 @@
 
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
           <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-            <h1 class="NameH2">Cadastro de Curso</h1>
+            <h1 class="NameH2">Cadastro da Disciplina</h1>
             <div class="btn-toolbar mb-2 mb-md-0">              
             </div>
           </div>
           <form>
-             <div class="form-row">
+           <div class="form-row">
+            <div>
+              <label for="idCurso">Matéria</label>
+              <select class="form-control" id="cursosCombo">
+            </div>
                <div class="col-md-4 mb-6">
-                  <label for="inputNome">Curso</label>
-                  <input type="text" class="form-control" id="inputCurso" placeholder="Digite o seu Curso">                        
+                  <label for="inputCurso">Curso</label>
+                  <input type="text" class="form-control" id="inpuMateria" placeholder="Digite a Matéria">                        
                        </div>                         
                        </div>  
-                    <button type="button" class="btn-cadastro" onclick="cadDisciplina()">Cadastrar</button>                             
+                      <button type="button" class="btn-cadastro" onclick="cadCurso()">Cadastrar</button>                             
               </div>
           </div>
         </main>
       </div>
     </div>
 
-    <!-- Principal JavaScript do Bootstrap
-    ================================================== -->
-    <!-- Foi colocado no final para a página carregar mais rápido -->
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script type="text/javascript">
-    let cadDisciplina = () => {
+     let listarCurso = () => {
         var settings = {
           "async": true,
           "crossDomain": false,
-          "url": `https://localhost:44353/api/v1/Combos/Subjects?subject=${$('#inputCurso').val()}`,
+          "url": "https://localhost:44353/api/v1/Combos/Subjects",
+          "method": "GET",
+          "headers": {
+            "Content-Type": "application/json",
+          }
+        }
+
+        $.ajax(settings).done(function (response, error) {
+
+          let column = response.map((subject) => {
+            return(`<option value="${subject.id}">${subject.subject}</option>`);
+          })
+
+          $("#cursosCombo").empty();
+          $("#cursosCombo").append(column);
+
+          console.log(response, error);
+          
+
+        })
+        .catch((res) => {
+          alert(res.responseText);
+        });
+    }
+
+    listarCurso();
+
+
+      let cadCurso = () => {
+        var settings = {
+          "async": true,
+          "crossDomain": false,
+          "url": `https://localhost:44353/api/v1/Combos/Matters?subjectId=${$('#cursosCombo').val()}&matter=${$('#inpuMateria').val()}`,
           "method": "POST",
           "headers": {
             "Content-Type": "application/json",
@@ -123,9 +151,9 @@
         }
 
         $.ajax(settings).done(function (response, error) {
-
           alert("Cadastrado com sucesso!!!")
-          $('#inputDisciplina').val('')
+
+          $('#inpuMateria').val('');
         })
         .catch((res) => {
           alert(res.responseText);
